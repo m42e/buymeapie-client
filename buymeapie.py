@@ -6,6 +6,7 @@ _BASE_URL = "https://app.buymeapie.com"
 
 class ProductGroup(object):
     """Group Colors"""
+
     __COLORS = [
         "b4bec6",
         "524dcf",
@@ -47,10 +48,21 @@ class ProductGroup(object):
 
 class BuyMeAPie(object):
     """BuyMeAPie Client"""
+
     def __init__(self, *, username, password, autologin=True, base_url=_BASE_URL):
         self.base_url = base_url
         self.session = requests.Session()
-        self.session.headers.update({'Origin': 'https://app.buymeapie.com', 'Accept': 'appliaction/json, text/plain, */*', 'User-Agent':	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Safari/605.1.15'})
+        self.session.headers.update(
+            {
+                "Origin": "https://app.buymeapie.com",
+                "Accept": "appliaction/json, text/plain, */*",
+                "User-Agent": (
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X "
+                    + "10_15_6) AppleWebKit/605.1.15 (KHTML, "
+                    + "like Gecko) Version/15.3 Safari/605.1.15"
+                ),
+            }
+        )
         self.session.auth = (username, password)
         if autologin:
             self.login()
@@ -238,6 +250,7 @@ class Item(object):
     @property
     def amount(self):
         return self._info["amount"]
+
     @amount.setter
     def amount(self, val):
         self._info["amount"] = val
@@ -245,7 +258,7 @@ class Item(object):
 
     @property
     def purchased(self):
-        return self._info["is_purchased"] or self._info['deleted']
+        return self._info["is_purchased"] or self._info["deleted"]
 
     def purchase(self):
         self._info["is_purchased"] = True
@@ -306,7 +319,7 @@ class UniqueItem(object):
 
     @group_id.setter
     def group_id(self, val):
-        self._info["group_id"] = group_id
+        self._info["group_id"] = val
         self._update()
 
     def _update(self):
